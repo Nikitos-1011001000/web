@@ -1,0 +1,254 @@
+ <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Каталог с меню</title>
+
+  <!-- Исправленная ссылка на Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .catalog-grid-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+
+.card-square {
+border: 1px solid #ddd;
+border-radius: 8px;
+overflow: hidden;
+height: 200px; /* Уменьшили высоту карточки */
+display: flex;
+flex-direction: column;
+}
+
+.card-square:hover {
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail-area {
+height: 80px !important;
+background-color: #f8f9fa;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #6c757d;
+font-size: 12px;
+}
+
+.text-area {
+padding: 10px;
+font-size: 14px;
+}
+
+.btn-group-bottom {
+margin-top: 10px;
+display: flex;
+gap: 8px;
+}
+
+.menu-content {
+/* Содержимое меню */
+}
+
+.user-footer {
+position: absolute; /* Фиксируем положение внизу */
+bottom: 20px; /* Отступ от низа */
+left: 15px; /* Соответствует padding sidebar */
+right: 15px; /* Соответствует padding sidebar */
+width: calc(100% - 30px); /* Учитываем отступы */
+}
+
+    /* Стили для боковой панели */
+    .sidebar {
+      min-height: 100vh;
+      background-color: #343a40;
+      color: white;
+      padding: 20px 15px;
+    }
+
+.blue-border {
+border: 2px solid blue;
+background-color: #007bff;
+color: white;
+padding: 4px 8px;
+border-radius: 4px; /* скруглённые углы (опционально) */
+}
+
+
+
+
+    /* Стили для аватара */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background-color: #6c757d;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Всплывающее меню */
+    .profile-menu {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 60px;
+      width: 120px;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+    }
+
+    .profile-menu .menu-item.profile {
+      background: #007bff;
+      color: white;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .profile-menu .menu-item.logout {
+      background: #f8f9fa;
+      color: #333;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid #dee2e6;
+    }
+
+/* Нижняя часть — Выход */
+.profile-menu .menu-item.logout {
+background: #f8f9fa;
+color: #333;
+padding: 8px 12px;
+text-align: center;
+font-size: 14px;
+border-top: 1px solid #dee2e6;
+}
+
+    /* Показ меню */
+    .avatar:hover + .profile-menu,
+    .profile-menu:hover {
+      display: block;
+    }
+
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #6c757d;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-menu {
+  display: none;
+  position: absolute;
+  top: 50%; /* центрируем по вертикали относительно аватара */
+  transform: translateY(-50%); /* точная центровка */
+  left: 60px; /* отступ от аватара */
+  width: 120px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+/* Показ меню при наведении на аватар ИЛИ на само меню */
+.avatar:hover + .profile-menu,
+.profile-menu:hover {
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Боковое меню -->
+      <div class="col-md-3 col-lg-2 d-none d-md-block sidebar d-flex flex-column">
+        <div>
+          <h5 class="mb-4 text-white">Меню</h5>
+          <hr class="text-white mb-4">
+          <nav>
+            <a href="#" class="nav-link blue-border mb-2">Главная</a>
+            <a href="#" class="nav-link">Каталог</a>
+            <a href="#" class="nav-link">О нас</a>
+            <a href="#" class="nav-link">Контакты</a>
+          </nav>
+        </div>
+
+        <!-- Блок с аватаром и меню внизу боковой панели -->
+        <div class="user-footer">
+          <hr class="text-white m-0">
+          <div class="d-flex align-items-center mt-2">
+            <div class="avatar me-2"></div>
+            <!-- Всплывающее меню (сразу после аватара!) -->
+            <div class="profile-menu">
+              <div class="menu-item profile">Профиль</div>
+              <div class="menu-item logout">Выход</div>
+            </div>
+            <span class="text-white">Пользователь</span>
+          </div>
+        </div>
+      </div>
+
+     <!-- Основной контент -->
+<div class="col-md-9 col-lg-10 main-content-wrapper">
+<div class="p-4 flex-grow-1 d-flex flex-column">
+<h1 class="text-center mb-5">Контакты</h1>
+
+<div class="catalog-grid-container">
+<div class="row w-100 justify-content-center" style="max-width: 800px;">
+<!-- Слева: Форма -->
+<div class="col-md-6">
+<div class="card p-4 shadow-sm">
+<form>
+<div class="mb-3">
+<label class="form-label">Имя</label>
+<input type="text" class="form-control">
+</div>
+<div class="mb-3">
+<label class="form-label">Почта</label>
+<div class="input-group">
+<span class="input-group-text">@</span>
+<input type="email" class="form-control">
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label">Сообщение</label>
+<textarea class="form-control" rows="4"></textarea>
+</div>
+<button type="submit" class="btn btn-primary w-100">Отправить</button>
+</form>
+</div>
+</div>
+<!-- Справа: Контакты -->
+<div class="col-md-5 offset-md-1">
+<h3 class="mb-3">Наши контакты</h3>
+<p class="text-muted">Lorem ipsum, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
