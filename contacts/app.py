@@ -6,6 +6,7 @@ app = Flask(__name__)
 REMOTE_HTML_URL = "https://example.com/path/to/contacts.html"
 
 @app.route("/", methods=['GET', 'POST'])
+@app.route("/<path:path>", methods=['GET'])
 def contacts():
     if request.method == 'GET':
         try:
