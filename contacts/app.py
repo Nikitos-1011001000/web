@@ -6,7 +6,6 @@ app = Flask(__name__)
 # 1. Находим папку, где лежит этот скрипт (app.py)
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Строим путь: папка проекта -> папка templates -> contacts.html
 file_path = os.path.join(base_dir, 'templates', 'contacts.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -14,10 +13,8 @@ def index():
     if request.method == 'POST':
         form_data = request.form.to_dict()
 
-        # Один аккуратный лог для тебя в терминале
         print(f"\n✅ Получены данные от пользователя: {form_data}\n")
 
-        # Красивая страница-ответ
         return """
             <html>
               <head><meta charset="utf-8"></head>
