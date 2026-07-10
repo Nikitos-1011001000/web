@@ -1,45 +1,42 @@
-import requests
-from flask import Flask, request, render_template
+import os
+from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
-REMOTE_HTML_URL = "https://example.com/path/to/contacts.html"
+# 1. Находим папку, где лежит этот скрипт (app.py)
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
-@app.route("/", methods=['GET', 'POST'])
-def contacts():
-    if request.method == 'GET':
-        try:
-            # Загружаем HTML из удалённого репозитория
-            response = requests.get(REMOTE_HTML_URL, timeout=10)
-            response.raise_for_status()  # Проверяем на ошибки HTTP
-            html_content = response.text
+# 2. Строим путь: папка проекта -> папка templates -> contacts.html
+file_path = os.path.join(base_dir, 'templates', 'contacts.html')
 
-            return html_content, 200, {'Content-Type': 'text/html; charset=utf-8'}
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        form_data = request.form.to_dict()
 
-        except requests.RequestException as e:
-            print(f"Ошибка загрузки удалённого HTML: {e}")
-            # Fallback: пытаемся загрузить локальную копию
-            try:
-                return render_template("contacts.html"), 200, {'Content-Type': 'text/html; charset=utf-8'}
-            except Exception as local_error:
-                return f"<h1>Ошибка загрузки страницы</h1><p>Ошибка: {local_error}</p>", 500
+        # Один аккуратный лог для тебя в терминале
+        print(f"\n✅ Получены данные от пользователя: {form_data}\n")
 
-    elif request.method == 'POST':
-        data = request.form.to_dict()
-        print("Получены данные от пользователя:")
-        for key, value in data.items():
-            print(f"{key}: {value}")
+        # Красивая страница-ответ
+        return """
+            <html>
+              <head><meta charset="utf-8"></head>
+              <body style="text-align:center; padding:50px; font-family:Arial;">
+                <h1 style="color:green;">✅ Спасибо за ваше сообщение!</h1>
+                <p>Данные успешно получены сервером.</p>
+                <a href="/" style="text-decoration:none; color:#007bff;">← Вернуться к форме</a>
+              </body>
+            </html>
+            """, 200, {'Content-Type': 'text/html; charset=utf-8'}
 
-        response = """
-        <html>
-        <head><title>Спасибо!</title></head>
-        <body>
-            <h1>Спасибо за ваше сообщение!</h1>
-            <p><a href="/">Вернуться на страницу контактов</a></p>
-        </body>
-        </html>
-        """
-        return response, 200, {'Content-Type': 'text/html; charset=utf-8'}
+    # 2. Если это обычный заход на страницу (GET) — отдаём contacts.html
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read(), 200, {'Content-Type': 'text/html; charset=utf-8'}
+
+
+    except Exception as e:
+        return f"<h1>Ошибка чтения: {str(e)}</h1>", 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True)
