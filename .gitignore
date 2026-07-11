@@ -1,0 +1,62 @@
+venv/
+.venv/
+env/
+ENV/
+virtualenv/
+.Python
+pip-selfcheck.json
+
+# --- Байт-код и скомпилированные файлы ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+.Python
+
+# --- Переменные окружения ---
+.env
+.env.local
+.env.*.local
+!.env.example  # Важно: не игнорируем пример файла, чтобы другие могли его скопировать
+
+# --- Артефакты сборки и дистрибутивы ---
+dist/
+build/
+*.egg-info/
+*.whl
+MANIFEST
+
+# --- Тесты и покрытие кода ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# --- IDE и редакторы ---
+# PyCharm
+.idea/
+# VS Code
+.vscode/
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# --- Системные файлы и временные файлы ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.cache/
+tmp/
+temp/
+
+# --- Логи и данные ---
+*.log
+logs/
+
+bootstrap-5.3.8-dist/
+aider-docker/
+.idea/
